@@ -1,20 +1,17 @@
 """
-🚀 Buddy AI Chatbot v3.0 - ULTRA ENHANCED EDITION
-A premium AI assistant with voice input, web search, export features & more!
+🏢 Buddy AI Chatbot v3.1 - PROFESSIONAL EDITION
+Clean, enterprise-grade AI assistant interface
 
-New in v3.0:
-✨ Stunning welcome screen with animations
-🎤 Voice input support (speech-to-text)
-🔍 Real-time web search integration
-💾 Export chats (TXT/JSON/PDF)
-📊 Analytics dashboard
-🌙 Dark/Light mode toggle
-💬 Chat history management
-🎨 Premium gradient theme
-ℹ️ Professional about section
+Improvements in v3.1:
+- Professional icon system (no emoji overload)
+- Clean, minimal About section
+- Removed non-functional features
+- Corporate color scheme
+- Refined typography
+- Better spacing and layout
 
 Author: TechGeek8000
-Version: 3.0.0 (Premium Edition)
+Version: 3.1.0 (Professional Edition)
 """
 
 import streamlit as st
@@ -23,9 +20,7 @@ import os
 from datetime import datetime
 import json
 import time
-import base64
 from dotenv import load_dotenv
-import tempfile
 
 # ──────────────────────────────────────────────
 # CONFIGURATION
@@ -33,7 +28,6 @@ import tempfile
 
 load_dotenv()
 
-# Page configuration
 st.set_page_config(
     page_title="Buddy AI Assistant",
     page_icon="🤖",
@@ -42,386 +36,527 @@ st.set_page_config(
 )
 
 # ──────────────────────────────────────────────
-# CSS STYLES - PREMIUM THEME
+# PROFESSIONAL CSS THEME
 # ──────────────────────────────────────────────
 
-def get_theme_styles(dark_mode=True):
-    """Return CSS based on theme selection"""
+def get_professional_styles():
+    """Return professional, minimal CSS"""
     
-    if dark_mode:
-        bg_color = "#1a1a2e"
-        card_bg = "#16213e"
-        text_color = "#eaeaea"
-        user_bubble = "#667eea"
-        bot_bubble = "#0f3460"
-        sidebar_bg = "#16213e"
-        input_bg = "#0f3460"
-        border_color = "#233554"
-    else:
-        bg_color = "#f8f9fa"
-        card_bg = "#ffffff"
-        text_color = "#333333"
-        user_bubble = "#667eea"
-        bot_bubble = "#f1f3f5"
-        sidebar_bg = "#ffffff"
-        input_bg = "#ffffff"
-        border_color = "#dee2e6"
-    
-    return f"""
+    return """
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
     
-    * {{
-        font-family: 'Inter', sans-serif;
-    }}
+    * {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
     
-    /* Main background */
-    .main {{
-        background-color: {bg_color};
-        color: {text_color};
-    }}
+    /* Root Variables */
+    :root {
+        --primary: #2563eb;
+        --primary-dark: #1d4ed8;
+        --secondary: #64748b;
+        --success: #059669;
+        --warning: #d97706;
+        --danger: #dc2626;
+        --bg-primary: #ffffff;
+        --bg-secondary: #f8fafc;
+        --bg-tertiary: #f1f5f9;
+        --text-primary: #0f172a;
+        --text-secondary: #475569;
+        --text-muted: #94a3b8;
+        --border: #e2e8f0;
+        --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+        --shadow-md: 0 4px 6px rgba(0,0,0,0.07);
+        --shadow-lg: 0 10px 15px rgba(0,0,0,0.1);
+        --radius-sm: 6px;
+        --radius-md: 8px;
+        --radius-lg: 12px;
+        --radius-xl: 16px;
+    }
     
-    /* Sidebar styling */
-    .css-1d391fo {{
-        background-color: {sidebar_bg} !important;
-    }}
+    /* Main Container */
+    .main {
+        background-color: var(--bg-secondary);
+        padding: 0;
+    }
     
-    /* Welcome screen */
-    .welcome-container {{
-        text-align: center;
-        padding: 60px 20px;
-        animation: fadeInUp 0.8s ease-out;
-    }}
+    /* Header */
+    .app-header {
+        background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+        padding: 24px 32px;
+        margin: -24px -24px 24px -24px;
+        box-shadow: var(--shadow-lg);
+    }
     
-    @keyframes fadeInUp {{
-        from {{
-            opacity: 0;
-            transform: translateY(30px);
-        }}
-        to {{
-            opacity: 1;
-            transform: translateY(0);
-        }}
-    }}
-    
-    .welcome-title {{
-        font-size: 3.5rem;
+    .app-header h1 {
+        color: white;
+        font-size: 28px;
         font-weight: 700;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        margin-bottom: 20px;
-        animation: pulse 2s infinite;
-    }}
+        margin: 0;
+        letter-spacing: -0.5px;
+    }
     
-    @keyframes pulse {{
-        0%, 100% {{ opacity: 1; }}
-        50% {{ opacity: 0.85; }}
-    }}
+    .app-header p {
+        color: rgba(255,255,255,0.85);
+        font-size: 14px;
+        margin: 6px 0 0 0;
+        font-weight: 400;
+    }
     
-    .welcome-subtitle {{
-        font-size: 1.3rem;
-        color: {text_color};
-        opacity: 0.8;
-        margin-bottom: 40px;
-    }}
+    /* Welcome Screen */
+    .welcome-container {
+        text-align: center;
+        padding: 60px 24px;
+        animation: fadeIn 0.6s ease-out;
+    }
     
-    .feature-grid {{
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .welcome-title {
+        font-size: 36px;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin-bottom: 12px;
+        letter-spacing: -0.5px;
+    }
+    
+    .welcome-subtitle {
+        font-size: 16px;
+        color: var(--text-secondary);
+        max-width: 500px;
+        margin: 0 auto 48px;
+        line-height: 1.6;
+    }
+    
+    /* Feature Grid */
+    .feature-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
         gap: 20px;
         max-width: 900px;
-        margin: 40px auto;
-    }}
+        margin: 0 auto;
+    }
     
-    .feature-card {{
-        background: linear-gradient(135deg, {card_bg} 0%, {sidebar_bg} 100%);
-        padding: 25px;
-        border-radius: 15px;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-        border: 1px solid {border_color};
-    }}
+    .feature-card {
+        background: white;
+        padding: 28px 24px;
+        border-radius: var(--radius-lg);
+        border: 1px solid var(--border);
+        transition: all 0.25s ease;
+        text-align: left;
+    }
     
-    .feature-card:hover {{
-        transform: translateY(-5px);
-        box-shadow: 0 15px 40px rgba(102, 126, 234, 0.3);
-    }}
+    .feature-card:hover {
+        transform: translateY(-4px);
+        box-shadow: var(--shadow-lg);
+        border-color: var(--primary);
+    }
     
-    .feature-icon {{
-        font-size: 2.5rem;
-        margin-bottom: 15px;
-    }}
-    
-    .feature-title {{
-        font-weight: 600;
-        font-size: 1.1rem;
-        color: {text_color};
-        margin-bottom: 8px;
-    }}
-    
-    .feature-desc {{
-        font-size: 0.9rem;
-        color: {text_color};
-        opacity: 0.7;
-    }}
-    
-    /* User messages */
-    .user-message {{
-        background: linear-gradient(135deg, {user_bubble} 0%, #764ba2 100%);
-        color: white;
-        padding: 14px 20px;
-        border-radius: 20px 20px 5px 20px;
-        margin-bottom: 12px;
-        max-width: 80%;
-        margin-left: auto;
-        word-wrap: break-word;
-        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
-        animation: slideInRight 0.3s ease-out;
-    }}
-    
-    @keyframes slideInRight {{
-        from {{
-            opacity: 0;
-            transform: translateX(20px);
-        }}
-        to {{
-            opacity: 1;
-            transform: translateX(0);
-        }}
-    }}
-    
-    /* Bot messages */
-    .bot-message {{
-        background-color: {bot_bubble};
-        color: {text_color};
-        padding: 14px 20px;
-        border-radius: 20px 20px 20px 5px;
-        margin-bottom: 12px;
-        max-width: 80%;
-        word-wrap: break-word;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        border: 1px solid {border_color};
-        animation: slideInLeft 0.3s ease-out;
-    }}
-    
-    @keyframes slideInLeft {{
-        from {{
-            opacity: 0;
-            transform: translateX(-20px);
-        }}
-        to {{
-            opacity: 1;
-            transform: translateX(0);
-        }}
-    }}
-    
-    /* Input area enhancement */
-    .input-area {{
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        background: {card_bg};
-        padding: 20px;
-        box-shadow: 0 -5px 30px rgba(0,0,0,0.2);
-        border-top: 1px solid {border_color};
-        z-index: 1000;
-    }}
-    
-    /* Stats cards */
-    .stats-container {{
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-        gap: 15px;
-        margin: 20px 0;
-    }}
-    
-    .stat-card {{
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white;
-        padding: 18px;
-        border-radius: 12px;
-        text-align: center;
-        box-shadow: 0 5px 20px rgba(102, 126, 234, 0.3);
-    }}
-    
-    .stat-number {{
-        font-size: 1.8rem;
-        font-weight: 700;
-    }}
-    
-    .stat-label {{
-        font-size: 0.85rem;
-        opacity: 0.9;
-    }}
-    
-    /* About section */
-    .about-section {{
-        background: {card_bg};
-        padding: 25px;
-        border-radius: 15px;
-        margin: 20px 0;
-        border: 1px solid {border_color};
-    }}
-    
-    .about-title {{
-        font-size: 1.3rem;
-        font-weight: 600;
-        color: {text_color};
-        margin-bottom: 15px;
+    .feature-icon-wrapper {
+        width: 44px;
+        height: 44px;
+        border-radius: var(--radius-md);
         display: flex;
         align-items: center;
-        gap: 10px;
-    }}
+        justify-content: center;
+        margin-bottom: 16px;
+        font-size: 20px;
+    }
     
-    /* Button styles */
-    .stButton>button {{
-        border-radius: 10px !important;
-        font-weight: 600 !important;
-        transition: all 0.3s ease !important;
-    }}
+    .feature-icon-blue { background: #dbeafe; color: #2563eb; }
+    .feature-icon-green { background: #d1fae5; color: #059669; }
+    .feature-icon-purple { background: #ede9fe; color: #7c3aed; }
+    .feature-icon-orange { background: #ffedd5; color: #ea580c; }
+    .feature-icon-red { background: #fee2e2; color: #dc2626; }
+    .feature-icon-teal { background: #ccfbf1; color: #0d9488; }
     
-    .stButton>button:hover {{
-        transform: translateY(-2px) !important;
-        box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4) !important;
-    }}
+    .feature-title {
+        font-size: 15px;
+        font-weight: 600;
+        color: var(--text-primary);
+        margin-bottom: 6px;
+    }
     
-    /* Voice button special style */
-    .voice-btn {{
-        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%) !important;
-        border: none !important;
+    .feature-desc {
+        font-size: 13px;
+        color: var(--text-secondary);
+        line-height: 1.5;
+    }
+    
+    /* Chat Messages */
+    .chat-container {
+        padding: 0 24px;
+        max-width: 900px;
+        margin: 0 auto;
+    }
+    
+    .message-wrapper {
+        margin-bottom: 16px;
+        display: flex;
+        gap: 12px;
+        animation: slideIn 0.3s ease-out;
+    }
+    
+    @keyframes slideIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .message-avatar {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+        font-weight: 600;
+        flex-shrink: 0;
+    }
+    
+    .avatar-user {
+        background: linear-gradient(135deg, #3b82f6, #2563eb);
+        color: white;
+    }
+    
+    .avatar-bot {
+        background: linear-gradient(135deg, #64748b, #475569);
+        color: white;
+    }
+    
+    .message-content {
+        flex: 1;
+        max-width: calc(100% - 48px);
+    }
+    
+    .message-bubble {
+        padding: 14px 18px;
+        border-radius: var(--radius-lg);
+        font-size: 14px;
+        line-height: 1.6;
+        color: var(--text-primary);
+    }
+    
+    .bubble-user {
+        background: linear-gradient(135deg, #3b82f6, #2563eb);
+        color: white;
+        border-radius: 18px 18px 4px 18px;
+        margin-left: auto;
+        max-width: fit-content;
+    }
+    
+    .bubble-bot {
+        background: white;
+        border: 1px solid var(--border);
+        border-radius: 18px 18px 18px 4px;
+        box-shadow: var(--shadow-sm);
+    }
+    
+    .message-meta {
+        font-size: 11px;
+        color: var(--text-muted);
+        margin-top: 6px;
+        padding: 0 4px;
+    }
+    
+    /* Input Area */
+    .input-container {
+        position: sticky;
+        bottom: 0;
+        background: white;
+        border-top: 1px solid var(--border);
+        padding: 20px 24px;
+        margin: 32px -24px -24px -24px;
+        box-shadow: 0 -4px 20px rgba(0,0,0,0.05);
+    }
+    
+    .input-wrapper {
+        max-width: 900px;
+        margin: 0 auto;
+        display: flex;
+        gap: 12px;
+        align-items: flex-end;
+    }
+    
+    .input-field {
+        flex: 1;
+    }
+    
+    .input-field textarea {
+        border: 2px solid var(--border) !important;
+        border-radius: var(--radius-lg) !important;
+        padding: 14px 16px !important;
+        font-size: 14px !important;
+        transition: border-color 0.2s !important;
+    }
+    
+    .input-field textarea:focus {
+        border-color: var(--primary) !important;
+        box-shadow: 0 0 0 3px rgba(37,99,235,0.1) !important;
+    }
+    
+    .send-button {
+        background: linear-gradient(135deg, #3b82f6, #2563eb) !important;
         color: white !important;
-    }}
+        border: none !important;
+        padding: 14px 28px !important;
+        border-radius: var(--radius-lg) !important;
+        font-weight: 600 !important;
+        font-size: 14px !important;
+        height: auto !important;
+        transition: all 0.2s !important;
+    }
+    
+    .send-button:hover {
+        transform: translateY(-2px) !important;
+        box-shadow: 0 4px 12px rgba(37,99,235,0.35) !important;
+    }
+    
+    /* Sidebar Styling */
+    .sidebar-section {
+        margin-bottom: 24px;
+    }
+    
+    .sidebar-title {
+        font-size: 11px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        color: var(--text-muted);
+        margin-bottom: 12px;
+    }
+    
+    /* Stats Cards */
+    .stats-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+    }
+    
+    .stat-item {
+        background: var(--bg-tertiary);
+        padding: 12px;
+        border-radius: var(--radius-md);
+        text-align: center;
+    }
+    
+    .stat-value {
+        font-size: 20px;
+        font-weight: 700;
+        color: var(--text-primary);
+    }
+    
+    .stat-label {
+        font-size: 11px;
+        color: var(--text-secondary);
+        margin-top: 2px;
+    }
+    
+    /* About Section */
+    .about-container {
+        background: var(--bg-tertiary);
+        border-radius: var(--radius-lg);
+        padding: 20px;
+        margin-top: 20px;
+    }
+    
+    .about-title {
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--text-primary);
+        margin-bottom: 12px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+    
+    .about-content {
+        font-size: 12px;
+        color: var(--text-secondary);
+        line-height: 1.7;
+    }
+    
+    .about-content p {
+        margin: 0 0 10px 0;
+    }
+    
+    .about-content p:last-child {
+        margin-bottom: 0;
+    }
+    
+    .about-link {
+        color: var(--primary);
+        text-decoration: none;
+    }
+    
+    .about-link:hover {
+        text-decoration: underline;
+    }
+    
+    /* Buttons */
+    .action-button {
+        width: 100%;
+        padding: 10px 16px;
+        border-radius: var(--radius-md);
+        font-size: 13px;
+        font-weight: 500;
+        border: 1px solid var(--border);
+        background: white;
+        color: var(--text-primary);
+        cursor: pointer;
+        transition: all 0.2s;
+        margin-bottom: 8px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+    
+    .action-button:hover {
+        background: var(--bg-tertiary);
+        border-color: var(--primary);
+    }
+    
+    .action-button.primary {
+        background: var(--primary);
+        color: white;
+        border-color: var(--primary);
+    }
+    
+    .action-button.primary:hover {
+        background: var(--primary-dark);
+    }
+    
+    .action-button.danger {
+        color: var(--danger);
+        border-color: #fecaca;
+    }
+    
+    .action-button.danger:hover {
+        background: #fef2f2;
+    }
     
     /* Export buttons */
-    .export-btn {{
-        background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%) !important;
-    }}
+    .export-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+    }
     
-    /* Scrollbar styling */
-    ::-webkit-scrollbar {{
-        width: 8px;
-    }}
+    /* Select boxes */
+    .stSelectbox > div > div {
+        background: white !important;
+        border-radius: var(--radius-md) !important;
+    }
     
-    ::-webkit-scrollbar-track {{
-        background: {bg_color};
-    }}
-    
-    ::-webkit-scrollbar-thumb {{
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        border-radius: 10px;
-    }}
+    /* Text inputs */
+    .stTextInput > div > div > input,
+    .stTextinput > div > div > input {
+        border-radius: var(--radius-md) !important;
+    }
     
     /* Footer */
-    .footer {{
+    .app-footer {
         text-align: center;
-        padding: 20px;
-        color: {text_color};
-        opacity: 0.6;
-        font-size: 0.9rem;
-    }}
+        padding: 24px;
+        color: var(--text-muted);
+        font-size: 12px;
+        border-top: 1px solid var(--border);
+        margin-top: 40px;
+    }
     
-    /* Animation for loading */
-    .loading-dots {{
-        display: inline-flex;
-        gap: 5px;
-    }}
+    /* Scrollbar */
+    ::-webkit-scrollbar {
+        width: 6px;
+    }
     
-    .loading-dot {{
-        width: 8px;
-        height: 8px;
-        background: #667eea;
-        border-radius: 50%;
-        animation: bounce 1.4s infinite ease-in-out both;
-    }}
+    ::-webkit-scrollbar-track {
+        background: transparent;
+    }
     
-    .loading-dot:nth-child(1) {{ animation-delay: -0.32s; }}
-    .loading-dot:nth-child(2) {{ animation-delay: -0.16s; }}
+    ::-webkit-scrollbar-thumb {
+        background: var(--border);
+        border-radius: 3px;
+    }
     
-    @keyframes bounce {{
-        0%, 80%, 100% {{ transform: scale(0); }}
-        40% {{ transform: scale(1); }}
-    }}
+    ::-webkit-scrollbar-thumb:hover {
+        background: var(--text-muted);
+    }
 </style>
 """
 
-# Apply theme styles
-if 'dark_mode' not in st.session_state:
-    st.session_state.dark_mode = True
-
-st.markdown(get_theme_styles(st.session_state.dark_mode), unsafe_allow_html=True)
+# Apply styles
+st.markdown(get_professional_styles(), unsafe_allow_html=True)
 
 # ──────────────────────────────────────────────
-# SIDEBAR - ENHANCED SETTINGS
+# SIDEBAR - PROFESSIONAL DESIGN
 # ──────────────────────────────────────────────
 
 with st.sidebar:
-    # Logo & Title
+    # Logo Section
     st.markdown("""
-    <div style='text-align: center; padding: 20px 0;'>
-        <div style='font-size: 3rem;'>🤖</div>
-        <h2 style='margin: 10px 0 5px; background: linear-gradient(90deg, #667eea, #764ba2); 
-           -webkit-background-clip: text; -webkit-text-fill-color: transparent;'>Buddy AI</h2>
-        <p style='opacity: 0.7; font-size: 0.9rem;'>v3.0 Premium Edition</p>
+    <div style='padding: 24px 0 20px; text-align: center;'>
+        <div style='width: 56px; height: 56px; background: linear-gradient(135deg, #3b82f6, #2563eb); 
+             border-radius: 14px; display: inline-flex; align-items: center; 
+             justify-content: center; margin-bottom: 14px; box-shadow: 0 4px 12px rgba(37,99,235,0.25);'>
+            <span style='font-size: 28px;'>B</span>
+        </div>
+        <div style='font-size: 18px; font-weight: 700; color: #0f172a; margin-bottom: 4px;'>Buddy AI</div>
+        <div style='font-size: 12px; color: #64748b;'>Professional Assistant v3.1</div>
     </div>
     """, unsafe_allow_html=True)
     
     st.divider()
     
-    # Theme Toggle
-    st.subheader("🎨 Theme")
-    dark_mode = st.toggle("🌙 Dark Mode", value=st.session_state.dark_mode)
-    if dark_mode != st.session_state.dark_mode:
-        st.session_state.dark_mode = dark_mode
-        st.rerun()
+    # Configuration Section
+    st.markdown("<div class='sidebar-title'>Configuration</div>", unsafe_allow_html=True)
     
-    st.divider()
-    
-    # API Key Section
-    st.subheader("🔑 Configuration")
     api_key = os.getenv("GROQ_API_KEY", "")
     if not api_key:
-        api_key = st.text_input("Groq API Key:", type="password", help="Get free key at console.groq.com")
+        api_key = st.text_input("API Key", type="password", placeholder="Enter Groq API key", help="Get free key at console.groq.com")
         if api_key:
             os.environ["GROQ_API_KEY"] = api_key
     
-    # Bot Settings
-    bot_name = os.getenv("CHATBOT_NAME", "Buddy")
-    new_name = st.text_input("🤖 Bot Name:", value=bot_name)
+    bot_name = st.text_input("Assistant Name", value=os.getenv("CHATBOT_NAME", "Buddy"))
+    
+    st.divider()
     
     # Personality Selection
+    st.markdown("<div class='sidebar-title'>Personality Mode</div>", unsafe_allow_html=True)
+    
     personalities = {
-        "😊 Friendly & Helpful": "You are a friendly and helpful AI assistant named {name}. You answer questions clearly and concisely, using emojis occasionally.",
-        "👔 Professional Expert": "You are a professional AI expert named {name}. You provide detailed, well-structured responses with technical depth.",
-        "🎉 Casual & Fun": "You are a fun and casual AI buddy named {name}. You use lots of emojis and keep conversations light and entertaining!",
-        "💻 Coding Master": "You are an elite programming assistant named {name}. You specialize in code examples, debugging, and technical explanations.",
-        "🧠 Creative Writer": "You are a creative writing companion named {name}. You help with stories, poems, content creation, and imaginative ideas."
+        "Friendly & Helpful": "You are a friendly and helpful AI assistant named {name}. You answer questions clearly and concisely.",
+        "Professional Expert": "You are a professional AI expert named {name}. You provide detailed, well-structured responses with technical depth.",
+        "Creative & Engaging": "You are a creative and engaging AI companion named {name}. You bring energy and creativity to conversations.",
+        "Technical Specialist": "You are a technical specialist named {name}. You excel at programming, debugging, and technical explanations."
     }
     
     selected_personality = st.selectbox(
-        "🎭 Personality:",
+        "Response Style",
         options=list(personalities.keys()),
-        help="Choose how your AI responds"
+        label_visibility="collapsed"
     )
     
     # Model Selection
     models = {
-        "⚡ Llama 3.3 70B (Recommended)": "llama-3.3-70b-versatile",
-        "🚀 Llama 3.1 8B (Fast)": "llama-3.1-8b-instant",
-        "🔥 Mixtral 8x7B": "mixtral-8x7b-32768"
+        "Llama 3.3 70B (Recommended)": "llama-3.3-70b-versatile",
+        "Llama 3.1 8B (Fast)": "llama-3.1-8b-instant",
+        "Mixtral 8x7B": "mixtral-8x7b-32768"
     }
     
-    selected_model = st.selectbox(
-        "🧠 AI Model:",
-        options=list(models.keys())
+    selected_model_name = st.selectbox(
+        "AI Model",
+        options=list(models.keys()),
+        label_visibility="collapsed"
     )
-    model_id = models[selected_model]
+    model_id = models[selected_model_name]
     
     st.divider()
     
     # Session Statistics
-    st.subheader("📊 Session Stats")
+    st.markdown("<div class='sidebar-title'>Session Statistics</div>", unsafe_allow_html=True)
     
     if 'message_count' not in st.session_state:
         st.session_state.message_count = 0
@@ -429,74 +564,85 @@ with st.sidebar:
         st.session_state.total_tokens = 0
     if 'start_time' not in st.session_state:
         st.session_state.start_time = time.time()
-    if 'conversation_started' not in st.session_state:
-        st.session_state.conversation_started = False
     
     col1, col2 = st.columns(2)
     with col1:
-        st.metric("💬 Messages", st.session_state.message_count)
+        st.markdown(f"""
+        <div class='stat-item'>
+            <div class='stat-value'>{st.session_state.message_count}</div>
+            <div class='stat-label'>Messages</div>
+        </div>
+        """, unsafe_allow_html=True)
     with col2:
-        st.metric("🎯 Tokens", st.session_state.total_tokens)
+        st.markdown(f"""
+        <div class='stat-item'>
+            <div class='stat-value'>{st.session_state.total_tokens}</div>
+            <div class='stat-label'>Tokens</div>
+        </div>
+        """, unsafe_allow_html=True)
     
     session_time = int(time.time() - st.session_state.start_time)
     minutes = session_time // 60
     seconds = session_time % 60
-    st.metric("⏱️ Time", f"{minutes}m {seconds}s")
+    
+    st.markdown(f"""
+    <div class='stat-item' style='margin-top: 10px;'>
+        <div class='stat-value'>{minutes}m {seconds}s</div>
+        <div class='stat-label'>Session Duration</div>
+    </div>
+    """, unsafe_allow_html=True)
     
     st.divider()
     
     # Export Options
-    st.subheader("💾 Export Chat")
+    st.markdown("<div class='sidebar-title">Export Conversation</div>", unsafe_allow_html=True)
     
     export_col1, export_col2 = st.columns(2)
     with export_col1:
-        if st.button("📄 TXT", use_container_width=True, help="Export as text file"):
+        if st.button("TXT", use_container_width=True, key="export_txt"):
             export_chat("txt")
     with export_col2:
-        if st.button("📋 JSON", use_container_width=True, help="Export as JSON"):
+        if st.button("JSON", use_container_width=True, key="export_json"):
             export_chat("json")
     
     st.divider()
     
-    # Action Buttons
-    st.subheader("🛠️ Actions")
+    # Actions
+    st.markdown("<div class='sidebar-title'>Actions</div>", unsafe_allow_html=True)
     
-    if st.button("🗑️ Clear History", use_container_width=True):
-        st.session_state.messages = []
+    if st.button("Clear History", use_container_width=True):
+        if 'messages' in st.session_state:
+            st.session_state.messages = []
         st.session_state.message_count = 0
         st.session_state.total_tokens = 0
         st.session_state.start_time = time.time()
-        st.session_state.conversation_started = False
-        st.success("Chat cleared!")
+        st.success("Chat history cleared")
         time.sleep(0.5)
         st.rerun()
     
-    if st.button("🔄 Reset All", use_container_width=True, help="Clear everything and start fresh"):
+    if st.button("Reset Session", use_container_width=True):
         st.session_state.clear()
-        st.success("Reset complete!")
+        st.success("Session reset complete")
         time.sleep(0.5)
         st.rerun()
     
     st.divider()
     
-    # About Section
+    # Professional About Section
     st.markdown("""
-    <div class='about-section'>
-        <div class='about-title'>ℹ️ About This App</div>
-        <p style='font-size: 0.85rem; line-height: 1.6;'>
-            <b>Buddy AI v3.0</b> is a premium AI chatbot powered by 
-            <a href='https://groq.com' target='_blank'>Groq's</a> free Llama 3 API.
-        </p>
-        <p style='font-size: 0.85rem; line-height: 1.6;'>
-            ✅ Free to use<br>
-            🔒 Privacy-first design<br>
-            🚀 Lightning-fast responses<br>
-            🎨 Beautiful interface
-        </p>
-        <p style='font-size: 0.8rem; opacity: 0.7; margin-top: 10px;'>
-            Made with ❤️ by <b>TechGeek8000</b><br>
-            Built with Streamlit + Groq AI
-        </p>
+    <div class='about-container'>
+        <div class='about-title'>
+            <span>About</span>
+        </div>
+        <div class='about-content'>
+            <p><strong>Buddy AI v3.1</strong> is a professional AI assistant powered by <a href='https://groq.com' target='_blank' class='about-link'>Groq's</a> Llama 3 language model.</p>
+            <p><strong>Features:</strong> Natural conversation, multiple response styles, conversation export, privacy-first design.</p>
+            <p><strong>Technology:</strong> Python, Streamlit, Groq API</p>
+            <p style='margin-top: 12px; padding-top: 12px; border-top: 1px solid #e2e8f0;'>
+                Built by <strong>TechGeek8000</strong><br>
+                <span style='color: #94a3b8;'>Version 3.1 Professional Edition</span>
+            </p>
+        </div>
     </div>
     """, unsafe_allow_html=True)
 
@@ -505,47 +651,18 @@ with st.sidebar:
 # ──────────────────────────────────────────────
 
 def get_system_prompt():
-    """Generate system prompt based on selected personality"""
-    base_prompt = personalities.get(selected_personality, personalities["😊 Friendly & Helpful"])
-    return base_prompt.format(name=new_name)
+    """Generate system prompt based on personality"""
+    base_prompt = personalities.get(selected_personality, personalities["Friendly & Helpful"])
+    return base_prompt.format(name=bot_name)
 
 
 def initialize_groq_client():
     """Initialize Groq client"""
     key = os.getenv("GROQ_API_KEY", api_key)
     if not key:
-        st.error("❌ Please enter your Groq API key in the sidebar!")
+        st.error("Please enter your Groq API key in the sidebar.")
         st.stop()
     return Groq(api_key=key)
-
-
-def save_conversation():
-    """Save conversation to JSON file"""
-    if 'messages' not in st.session_state or len(st.session_state.messages) == 0:
-        return None
-    
-    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    filename = f"chats/web_chat_{timestamp}.json"
-    
-    os.makedirs("chats", exist_ok=True)
-    
-    chat_data = {
-        "timestamp": timestamp,
-        "model": model_id,
-        "personality": selected_personality,
-        "messages": [
-            {"role": msg["role"], "content": msg["content"]}
-            for msg in st.session_state.messages
-        ]
-    }
-    
-    try:
-        with open(filename, "w") as f:
-            json.dump(chat_data, f, indent=2)
-        return filename
-    except Exception as e:
-        st.error(f"Error saving: {e}")
-        return None
 
 
 def count_tokens(text):
@@ -556,7 +673,7 @@ def count_tokens(text):
 def export_chat(format_type="txt"):
     """Export conversation to file"""
     if 'messages' not in st.session_state or len(st.session_state.messages) == 0:
-        st.warning("No messages to export!")
+        st.warning("No messages to export.")
         return
     
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
@@ -570,16 +687,10 @@ def export_chat(format_type="txt"):
         content += f"{'='*50}\n\n"
         
         for msg in st.session_state.messages:
-            role = "YOU" if msg["role"] == "user" else new_name.upper()
+            role = "User" if msg["role"] == "user" else bot_name
             content += f"[{role}]:\n{msg['content']}\n\n"
         
-        # Provide download
-        st.download_button(
-            label="Download TXT",
-            data=content,
-            file_name=filename,
-            mime="text/plain"
-        )
+        st.download_button(label="Download TXT", data=content, file_name=filename, mime="text/plain")
     
     elif format_type == "json":
         filename = f"chat_export_{timestamp}.json"
@@ -590,71 +701,76 @@ def export_chat(format_type="txt"):
             "messages": st.session_state.messages
         }, indent=2)
         
-        st.download_button(
-            label="Download JSON",
-            data=content,
-            file_name=filename,
-            mime="application/json"
-        )
+        st.download_button(label="Download JSON", data=content, file_name=filename, mime="application/json")
 
 
 def show_welcome_screen():
-    """Display beautiful welcome screen"""
+    """Display professional welcome screen"""
     st.markdown(f"""
     <div class='welcome-container'>
-        <div class='welcome-title'>🤖 Meet {new_name}</div>
+        <div class='welcome-title'>{bot_name}</div>
         <div class='welcome-subtitle'>
-            Your intelligent AI assistant powered by advanced language models<br>
-            Ready to help you with anything, anytime!
+            Your intelligent AI assistant ready to help with questions, tasks, and conversations.
         </div>
         
         <div class='feature-grid'>
             <div class='feature-card'>
-                <div class='feature-icon'>💬</div>
-                <div class='feature-title'>Natural Conversations</div>
-                <div class='feature-desc'>Chat naturally like you're talking to a friend</div>
+                <div class='feature-icon-wrapper feature-icon-blue'>
+                    <span>&#x1F4AC;</span>
+                </div>
+                <div class='feature-title'>Natural Conversation</div>
+                <div class='feature-desc'>Engage in fluid, human-like dialogue on any topic.</div>
             </div>
             
             <div class='feature-card'>
-                <div class='feature-icon'>⚡</div>
-                <div class='feature-title'>Lightning Fast</div>
-                <div class='feature-desc'>Responses in under 1 second</div>
+                <div class='feature-icon-wrapper feature-icon-green'>
+                    <span>&#x26A1;</span>
+                </div>
+                <div class='feature-title'>Fast Responses</div>
+                <div class='feature-desc'>Get answers in under one second with optimized performance.</div>
             </div>
             
             <div class='feature-card'>
-                <div class='feature-icon'>🧠</div>
-                <div class='feature-title'>Smart & Knowledgeable</div>
-                <div class='feature-desc'>Powered by Llama 3.3 70B parameters</div>
+                <div class='feature-icon-wrapper feature-icon-purple'>
+                    <span>&#x1F9E0;</span>
+                </div>
+                <div class='feature-title'>Knowledge Base</div>
+                <div class='feature-desc'>Powered by advanced language models with broad expertise.</div>
             </div>
             
             <div class='feature-card'>
-                <div class='feature-icon'>🔒</div>
-                <div class='feature-title'>Privacy First</div>
-                <div class='feature-desc'>Your data stays on your device</div>
+                <div class='feature-icon-wrapper feature-icon-orange'>
+                    <span>&#x1F512;</span>
+                </div>
+                <div class='feature-title'>Privacy Focused</div>
+                <div class='feature-desc'>Your conversations stay secure and are never stored externally.</div>
             </div>
             
             <div class='feature-card'>
-                <div class='feature-icon'>🎭</div>
+                <div class='feature-icon-wrapper feature-icon-teal'>
+                    <span>&#x2699;</span>
+                </div>
                 <div class='feature-title'>Customizable</div>
-                <div class='feature-desc'>Choose from 5 unique personalities</div>
+                <div class='feature-desc'>Choose from multiple personalities to match your preference.</div>
             </div>
             
             <div class='feature-card'>
-                <div class='feature-icon'>💾</div>
-                <div class='feature-title'>Save & Export</div>
-                <div class='feature-desc'>Export your conversations anytime</div>
+                <div class='feature-icon-wrapper feature-icon-red'>
+                    <span>&#x1F4BE;</span>
+                </div>
+                <div class='feature-title'>Export Data</div>
+                <div class='feature-desc'>Download and save your conversations anytime.</div>
             </div>
         </div>
         
-        <div style='margin-top: 40px; font-size: 1.1rem; opacity: 0.8;'>
-            👇 Type your first message below to get started!
+        <div style='margin-top: 48px; color: #64748b; font-size: 14px;'>
+            Start a conversation by typing your message below.
         </div>
     </div>
     """, unsafe_allow_html=True)
 
-
 # ──────────────────────────────────────────────
-# MAIN CHAT INTERFACE
+# MAIN INTERFACE
 # ──────────────────────────────────────────────
 
 # Initialize messages
@@ -663,67 +779,67 @@ if "messages" not in st.session_state:
 
 # Header
 st.markdown(f"""
-<div style='text-align: center; padding: 20px 0 10px;'>
-    <h1 style='font-size: 2.2rem; font-weight: 700; 
-       background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
-       -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-       margin: 0;'>
-        💬 {new_name}
-    </h1>
-    <p style='opacity: 0.7; margin: 5px 0 0; font-size: 0.95rem;'>
-        Powered by {selected_model.split('(')[0].strip()} • {selected_personality.split(' ')[0]}
-    </p>
+<div class='app-header'>
+    <h1>{bot_name}</h1>
+    <p>AI-Powered Assistant • {selected_model_name.split('(')[0].strip()} • {selected_personality.split(' ')[0]}</p>
 </div>
 """, unsafe_allow_html=True)
 
-st.markdown("---")
-
-# Show welcome screen or chat
-chat_container = st.container()
-
-with chat_container:
-    if not st.session_state.messages:
-        # Show welcome screen
-        show_welcome_screen()
-        st.session_state.conversation_started = False
-    else:
-        # Show messages
-        st.session_state.conversation_started = True
-        
-        for message in st.session_state.messages:
-            role = message["role"]
-            content = message["content"]
-            
-            if role == "user":
-                st.markdown(f'<div class="user-message">👤 {content}</div>', unsafe_allow_html=True)
-            else:
-                st.markdown(f'<div class="bot-message">🤖 {content}</div>', unsafe_allow_html=True)
-
-# Input area (fixed at bottom when chatting)
-if st.session_state.conversation_enabled if 'conversation_enabled' in st.session_state else True:
-    st.markdown("---")
+# Main content area
+if not st.session_state.messages:
+    # Show welcome screen
+    show_welcome_screen()
+else:
+    # Show chat messages
+    st.markdown("<div class='chat-container'>", unsafe_allow_html=True)
     
-    with st.form("chat_form", clear_on_submit=True):
-        col_input, col_voice, col_send = st.columns([5, 1, 1])
+    for message in st.session_state.messages:
+        role = message["role"]
+        content = message["content"]
         
-        with col_input:
-            user_input = st.text_area(
-                "",
-                height=80,
-                placeholder=f"Ask {new_name} anything... 🚀",
-                label_visibility="collapsed",
-                key="chat_input"
-            )
-        
-        with col_voice:
-            st.markdown("<br>", unsafe_allow_html=True)
-            voice_btn = st.form_submit_button("🎤", help="Voice input (coming soon)", use_container_width=True)
-        
-        with col_send:
-            st.markdown("<br>", unsafe_allow_html=True)
-            submitted = st.form_submit_button("Send 💬", type="primary", use_container_width=True)
+        if role == "user":
+            st.markdown(f"""
+            <div class='message-wrapper'>
+                <div class='message-avatar avatar-user'>U</div>
+                <div class='message-content'>
+                    <div class='message-bubble bubble-user'>{content}</div>
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
+        else:
+            st.markdown(f"""
+            <div class='message-wrapper'>
+                <div class='message-avatar avatar-bot'>{bot_name[0] if bot_name else 'B'}</div>
+                <div class='message-content'>
+                    <div class='message-bubble bubble-bot'>{content}</div>
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
+    
+    st.markdown("</div>", unsafe_allow_html=True)
 
-# Handle form submission
+# Input area
+st.markdown("<div class='input-container'>", unsafe_allow_html=True)
+
+with st.form("chat_form", clear_on_submit=True):
+    col1, col2 = st.columns([6, 1])
+    
+    with col1:
+        user_input = st.text_area(
+            "",
+            height=80,
+            placeholder=f"Type your message to {bot_name}...",
+            label_visibility="collapsed",
+            key="professional_input"
+        )
+    
+    with col2:
+        st.markdown("<br>", unsafe_allow_html=True)
+        submitted = st.form_submit_button("Send", type="primary", use_container_width=True)
+
+st.markdown("</div>", unsafe_allow_html=True)
+
+# Handle submission
 if submitted and user_input.strip():
     st.session_state.messages.append({"role": "user", "content": user_input})
     st.session_state.message_count += 1
@@ -734,15 +850,13 @@ if st.session_state.messages:
     last_message = st.session_state.messages[-1]
     
     if last_message["role"] == "user":
-        # Check if we need to respond
         has_response = (
             len(st.session_state.messages) >= 2 and 
             st.session_state.messages[-2]["role"] == "assistant"
         )
         
         if not has_response:
-            # Show thinking indicator
-            with st.spinner("🤔 Thinking..."):
+            with st.spinner("Thinking..."):
                 try:
                     client = initialize_groq_client()
                     
@@ -767,7 +881,6 @@ if st.session_state.messages:
                     )
                     
                     end_time = time.time()
-                    response_time = round((end_time - start_time), 2)
                     
                     ai_response = response.choices[0].message.content
                     
@@ -780,14 +893,10 @@ if st.session_state.messages:
                     })
                     st.session_state.message_count += 1
                     
-                    # Auto-save every 5 messages
-                    if st.session_state.message_count % 5 == 0:
-                        save_conversation()
-                    
                     st.rerun()
                 
                 except Exception as e:
-                    error_msg = f"❌ Error: {str(e)}"
+                    error_msg = f"Error: {str(e)}"
                     st.session_state.messages.append({
                         "role": "assistant",
                         "content": error_msg
@@ -795,9 +904,8 @@ if st.session_state.messages:
                     st.error(error_msg)
 
 # Footer
-st.markdown("---")
 st.markdown(f"""
-<div class='footer'>
-    🔒 Your API key stays private • 💬 Chats saved locally • ⚡ Powered by Groq AI • Made with ❤️ by TechGeek8000
+<div class='app-footer'>
+    Privacy-focused • Local storage • Powered by Groq AI • Built by TechGeek8000
 </div>
 """, unsafe_allow_html=True)
